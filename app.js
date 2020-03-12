@@ -58,7 +58,8 @@ app.use(methodOverride('_method'))
 
 // 分頁路由
 app.use('/', require('./routes/home.js'))
-
+app.use('/users', require('./routes/user.js'))
+app.use('/records', require('./routes/record.js'))
 
 // 監聽 server 啟動狀態
 
