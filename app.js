@@ -57,7 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 // 分頁路由
-
+app.use('/', require('./routes/home.js'))
 
 
 // 監聽 server 啟動狀態
