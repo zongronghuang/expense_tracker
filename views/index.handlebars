@@ -1,12 +1,14 @@
 <div class="mx-auto w-25">
-  <label for="category"></label>
-  <select class="form-control" name="category" id="category">
-    <option value="home">家居物業</option>
-    <option value="travel">交通出行</option>
-    <option value="fun">休閒娛樂</option>
-    <option value="food">餐飲食品</option>
-    <option value="misc">其他</option>
-  </select>
+  <form action="" method="POST">
+    <label for="category"></label>
+    <select class="form-control" name="category" id="category">
+      <option value="home">家居物業</option>
+      <option value="travel">交通出行</option>
+      <option value="fun">休閒娛樂</option>
+      <option value="food">餐飲食品</option>
+      <option value="misc">其他</option>
+    </select>
+  </form>
 </div>
 
 <div class="text-center mt-5 mb-3">
@@ -41,9 +43,11 @@
 
       <span>{{this.name}}</span>
       <span>{{this.amount}}</span>
-      <div>
-        <a class="btn btn-primary" href="#">Edit</a>
-        <a class="btn btn-danger" href="#">Delete</a>
+      <div class="d-flex">
+        <a class="btn btn-primary" href="/records/{{{this._id}}}/edit">Edit</a>
+        <form action="/records/{{{this._id}}}/delete?_method=DELETE" method="POST">
+          <button class="btn btn-danger" type="submit">Delete</a>
+        </form>
       </div>
     </li>
   {{/each}}
