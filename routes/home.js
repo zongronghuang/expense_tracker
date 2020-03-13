@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
         return record[category] = true
       })
 
-      console.log('records', records)
       return res.render('index', { records: records })
     })
 })
