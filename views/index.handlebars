@@ -1,9 +1,8 @@
 <div class="mx-auto w-25">
   <label for="category"></label>
   <select class="form-control" name="category" id="category">
-    <option value="all" selected>全部</option>
     <option value="home">家居物業</option>
-    <option value="transportation">交通出行</option>
+    <option value="travel">交通出行</option>
     <option value="fun">休閒娛樂</option>
     <option value="food">餐飲食品</option>
     <option value="misc">其他</option>
@@ -17,16 +16,37 @@
 
 {{! 清單}}
 <ul class="list-group w-75 mx-auto mb-5">
+  {{#each records}}
+    <li class="list-group-item mx-auto w-75 d-flex justify-content-between align-items-center bg-light">
 
-  <li class="list-group-item mx-auto w-75 d-flex justify-content-between align-items-center bg-light">
-    <i>icon</i>
-    <span>牛奶0000000000000</span>
-    <span>000</span>
-    <div>
-      <a class="btn btn-primary" href="#">Edit</a>
-      <a class="btn btn-danger" href="#">Delete</a>
-    </div>
-  </li>
+      {{#if home}}
+        <i class="fas fa-home"></i>
+      {{/if}}
+
+      {{#if travel}}
+        <i class="fas fa-shuttle-van"></i>
+      {{/if}}
+
+      {{#if fun}}
+        <i class="fas fa-grin-beam"></i>
+      {{/if}}
+
+      {{#if food}}
+        <i class="fas fa-utensils"></i>
+      {{/if}}
+
+      {{#if misc}}
+        <i class="fas fa-pen"></i>
+      {{/if}}
+
+      <span>{{this.name}}</span>
+      <span>{{this.amount}}</span>
+      <div>
+        <a class="btn btn-primary" href="#">Edit</a>
+        <a class="btn btn-danger" href="#">Delete</a>
+      </div>
+    </li>
+  {{/each}}
 
 </ul>
 
