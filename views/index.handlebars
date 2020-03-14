@@ -41,12 +41,12 @@
         <i class="fas fa-pen"></i>
       {{/if}}
 
-      <span>{{this.name}}</span>
+      <span class="w-25">{{this.name}}</span>
       <span>{{this.amount}}</span>
       <div class="d-flex">
         <a class="btn btn-primary" href="/records/{{{this._id}}}/edit">Edit</a>
         <form action="/records/{{{this._id}}}/delete?_method=DELETE" method="POST">
-          <button class="btn btn-danger" type="submit">Delete</a>
+          <button class="btn btn-danger ml-3" type="submit">Delete</a>
         </form>
       </div>
     </li>
