@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 const mongoose = require('mongoose')
 const User = require('../models/user.js')
 const bcrypt = require('bcryptjs')
@@ -24,7 +25,7 @@ module.exports = passport => {
     })
   )
 
-
+  passport.use
 
 
   passport.serializeUser((user, done) => {

@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record.js')
-
+const { authenticated } = require('../config/auth.js')
 
 // 顯示所有購買項目
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   Record.find()
     .lean()
     .exec((err, records) => {
@@ -20,12 +20,12 @@ router.get('/', (req, res) => {
 })
 
 // 取得新增項目頁面
-router.get('/new', (req, res) => {
+router.get('/new', authenticated, (req, res) => {
   res.render('new')
 })
 
 // 傳回新增項目
-router.post('/', (req, res) => {
+router.post('/', authenticated, (req, res) => {
   const record = new Record({
     name: req.body.name,
     category: req.body.category,
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
 })
 
 // 取回項目編輯頁面
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id })
     .lean()
     .exec((err, record) => {
@@ -59,7 +59,7 @@ router.get('/:id/edit', (req, res) => {
 
 
 // 傳回編輯資料
-router.put('/:id', (req, res) => {
+router.put('/:id', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     record.name = req.body.name
     record.date = req.body.date
@@ -75,7 +75,7 @@ router.put('/:id', (req, res) => {
 
 
 // 刪除項目
-router.delete('/:id/delete', (req, res) => {
+router.delete('/:id/delete', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.error(err)
     record.remove(err => {

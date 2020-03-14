@@ -1,21 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record.js')
+const { authenticated } = require('../config/auth.js')
 
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
 
-  Record.find()
-    .lean()
-    .exec((err, records) => {
-      if (err) console.error(err)
+  res.redirect('/records')
 
-      records.forEach(record => {
-        const category = record.category
-        return record[category] = true
-      })
-
-      return res.render('index', { records: records })
-    })
 })
 
 module.exports = router
