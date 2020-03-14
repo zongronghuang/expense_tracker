@@ -60,6 +60,7 @@ app.use(methodOverride('_method'))
 app.use('/', require('./routes/home.js'))
 app.use('/users', require('./routes/user.js'))
 app.use('/records', require('./routes/record.js'))
+app.use('/auth', require('./routes/auths.js'))
 
 // 監聽 server 啟動狀態
 
