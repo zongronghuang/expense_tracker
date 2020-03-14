@@ -28,8 +28,8 @@ router.post('/register', (req, res) => {
 
   let errors = []
 
-  if (!name || !email || !password || !password2) {
-    errors.push({ message: '所有欄位都必填' })
+  if (!email || !password || !password2) {
+    errors.push({ message: '名稱之外的欄位為必填' })
   }
 
   if (password !== password2) {

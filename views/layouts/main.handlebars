@@ -14,7 +14,16 @@
 
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="/">家庭記帳本</a>
-    <a class="btn btn-danger float-right" href="/users/logout">登出</a>
+    <div class="float-right d-flex">
+
+      {{#if isAuthenticated}}
+        <span class="font-weight-bold">{{user.name}}，你好!</span>
+        <form class="ml-3" action="/users/logout" method="GET">
+          <button class="btn btn-danger" type="submit">登出</button>
+        </form>
+      {{/if}}
+
+    </div>
   </nav>
 
   {{{body}}}
