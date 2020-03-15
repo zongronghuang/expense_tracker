@@ -5,18 +5,46 @@ const { authenticated } = require('../config/auth.js')
 
 // 顯示所有購買項目
 router.get('/', authenticated, (req, res) => {
-  Record.find()
-    .lean()
-    .exec((err, records) => {
-      if (err) console.error(err)
+  const queryCategory = req.query.category
 
-      records.forEach(record => {
-        const category = record.category
-        return record[category] = true
+  console.log('queryCategory', queryCategory)
+
+  if (!queryCategory || queryCategory === 'home') {
+    Record.find({ userId: req.user._id, category: 'home' })
+      .lean()
+      .exec((err, records) => {
+        if (err) console.error(err)
+        let total = 0
+        records.forEach(record => {
+          total += record.amount
+        })
+
+        records.forEach(record => {
+          const category = record.category
+          return record[category] = true
+        })
+
+        return res.render('index', { records: records, total: total, home: true })
       })
+  } else {
+    Record.find({ userId: req.user._id, category: queryCategory })
+      .lean()
+      .exec((err, records) => {
+        if (err) console.error(err)
+        let total = 0
+        records.forEach(record => {
+          total += record.amount
+        })
 
-      return res.render('index', { records: records })
-    })
+        records.forEach(record => {
+          const category = record.category
+          return record[category] = true
+        })
+
+        return res.render('index', { records: records, total: total, [queryCategory]: true })
+      })
+  }
+
 })
 
 // 取得新增項目頁面
@@ -35,7 +63,6 @@ router.post('/', authenticated, (req, res) => {
     userId: req.user._id
   })
 
-  console.log('record.date', record.date)
   record.save(err => {
     if (err) console.error(err)
     return res.redirect('/')
