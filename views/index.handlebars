@@ -1,19 +1,19 @@
 <div class="mx-auto w-25">
-  <form action="" method="POST">
+  <form action="/records" method="GET">
     <label for="category"></label>
-    <select class="form-control" name="category" id="category">
-      <option value="home">家居物業</option>
-      <option value="travel">交通出行</option>
-      <option value="fun">休閒娛樂</option>
-      <option value="food">餐飲食品</option>
-      <option value="misc">其他</option>
+    <select class="form-control" name="category" id="category" onchange="this.form.submit()">
+      <option value="home" {{#if home}} selected {{/if}}>家居物業</option>
+      <option value="travel" {{#if travel}} selected {{/if}}>交通出行</option>
+      <option value="fun" {{#if fun}} selected {{/if}}>休閒娛樂</option>
+      <option value="food" {{#if food}} selected {{/if}}>餐飲食品</option>
+      <option value="misc" {{#if misc}} selected {{/if}}>其他</option>
     </select>
   </form>
 </div>
 
 <div class="text-center mt-5 mb-3">
   <span>總金額：</span>
-  <span class="display-3">0</span>
+  <span class="display-3">{{{total}}}</span>
 </div>
 
 {{! 清單}}
