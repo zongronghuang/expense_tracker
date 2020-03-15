@@ -56,7 +56,7 @@ router.post('/register', (req, res) => {
           password2
         })
       } else {
-        const newUser = new User({    // 如果 email 不存在就直接新增
+        const newUser = new User({
           name,
           email,
           password

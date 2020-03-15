@@ -7,17 +7,20 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css">
+  <link rel="stylesheet" href="/stylesheets/custom.css">
   <title>Expense Tracker</title>
 </head>
 
-<body>
+<body class="bg-light">
 
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">家庭記帳本</a>
+  <nav class="navbar navbar-light bg-info">
+    <a class="navbar-brand" href="/">
+      <i class="fas fa-calculator"></i>
+      家庭記帳本</a>
     <div class="float-right d-flex">
 
       {{#if isAuthenticated}}
-        <span class="font-weight-bold align-text-bottom">{{user.name}}，你好!</span>
+        <span class="font-weight-bold mt-2">{{user.name}}，你好!</span>
         <form class="ml-3" action="/users/logout" method="GET">
           <button class="btn btn-danger" type="submit">登出</button>
         </form>
