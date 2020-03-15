@@ -12,7 +12,7 @@ const flash = require('connect-flash')
 
 
 // 建立與 MongoDB 連線
-mongoose.connect('mongodb://localhost/record', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/record', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
 const db = mongoose.connection
 db.on('error', () => {
@@ -64,6 +64,6 @@ app.use('/auth', require('./routes/auths.js'))
 
 // 監聽 server 啟動狀態
 
-app.listen(port, (req, res) => {
+app.listen(process.env.PORT || port, (req, res) => {
   console.log(`Server up & running at http://localhost:${port}`)
 })
