@@ -6,34 +6,41 @@ const { authenticated } = require('../config/auth.js')
 // 顯示所有購買項目
 router.get('/', authenticated, (req, res) => {
   const queryCategory = req.query.category
+  let total = 0
+  let subtotal = 0
 
-  console.log('queryCategory', queryCategory)
-
-  if (!queryCategory || queryCategory === 'home') {
-    Record.find({ userId: req.user._id, category: 'home' })
+  // 使用 totalAmount property 來儲存該使用者的總金額
+  if (!queryCategory || queryCategory === 'all') {
+    Record.find({ userId: req.user._id })
       .lean()
       .exec((err, records) => {
         if (err) console.error(err)
-        let total = 0
         records.forEach(record => {
           total += record.amount
         })
+
+        subtotal = total
 
         records.forEach(record => {
           const category = record.category
           return record[category] = true
         })
 
-        return res.render('index', { records: records, total: total, home: true })
+        return res.render('index', {
+          records,
+          total,
+          subtotal,
+          percentage: Math.floor((subtotal * 100) / total),
+          all: true
+        })
       })
   } else {
     Record.find({ userId: req.user._id, category: queryCategory })
       .lean()
       .exec((err, records) => {
         if (err) console.error(err)
-        let total = 0
         records.forEach(record => {
-          total += record.amount
+          subtotal += record.amount
         })
 
         records.forEach(record => {
@@ -41,7 +48,13 @@ router.get('/', authenticated, (req, res) => {
           return record[category] = true
         })
 
-        return res.render('index', { records: records, total: total, [queryCategory]: true })
+        return res.render('index', {
+          records,
+          total,
+          subtotal,
+          percentage: Math.floor((subtotal * 100) / total),
+          [queryCategory]: true
+        })
       })
   }
 
