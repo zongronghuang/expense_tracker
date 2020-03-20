@@ -6,11 +6,11 @@ const { authenticated } = require('../config/auth.js')
 // 顯示所有購買項目
 router.get('/', authenticated, (req, res) => {
   const queryCategory = req.query.category
-  let total = 0
-  let subtotal = 0
 
-  // 使用 totalAmount property 來儲存該使用者的總金額
   if (!queryCategory || queryCategory === 'all') {
+    let total = 0
+    let subtotal = 0
+
     Record.find({ userId: req.user._id })
       .lean()
       .exec((err, records) => {
@@ -30,11 +30,28 @@ router.get('/', authenticated, (req, res) => {
           records,
           total,
           subtotal,
-          percentage: Math.floor((subtotal * 100) / total),
+          percentage() {
+            if (!total) {
+              return '0'
+            } else {
+              return Math.floor((subtotal * 100) / total)
+            }
+          },
           all: true
         })
       })
   } else {
+    let total = 0
+    let subtotal = 0
+
+    Record.find({ userId: req.user._id })
+      .lean()
+      .exec((err, records) => {
+        records.forEach(record => {
+          total += record.amount
+        })
+      })
+
     Record.find({ userId: req.user._id, category: queryCategory })
       .lean()
       .exec((err, records) => {
@@ -72,7 +89,7 @@ router.post('/', authenticated, (req, res) => {
     category: req.body.category,
     date: req.body.date,
     amount: req.body.amount,
-    totalAmount: req.body.totalAmount,
+    retailer: req.body.retailer,
     userId: req.user._id
   })
 
@@ -105,6 +122,7 @@ router.put('/:id', authenticated, (req, res) => {
     record.date = req.body.date
     record.category = req.body.category
     record.amount = req.body.amount
+    record.retailer = req.body.retailer
 
     record.save(err => {
       if (err) return console.error(err)

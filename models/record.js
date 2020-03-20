@@ -17,9 +17,9 @@ const recordSchema = new Schema({
     type: Number,
     required: true
   },
-  totalAmount: {
-    type: Number,
-    required: false
+  retailer: {
+    type: String,
+    required: true
   },
   userId: {
     type: Schema.Types.ObjectId,
