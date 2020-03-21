@@ -1,15 +1,33 @@
-<div class="mx-auto w-25">
-  <form action="/records" method="GET">
+<div class="mx-auto w-50 mt-5">
+  <form action="/records" method="GET" class="d-flex">
     <label for="category"></label>
     <select class="form-control" name="category" id="category" onchange="this.form.submit()">
-      <option value="all" {{#if all}} selected {{/if}}>全部</option>
+      <option value="all" {{#if all}} selected {{/if}}>全部類別</option>
       <option value="home" {{#if home}} selected {{/if}}>家居物業</option>
       <option value="travel" {{#if travel}} selected {{/if}}>交通出行</option>
       <option value="fun" {{#if fun}} selected {{/if}}>休閒娛樂</option>
       <option value="food" {{#if food}} selected {{/if}}>餐飲食品</option>
       <option value="misc" {{#if misc}} selected {{/if}}>其他</option>
     </select>
+
+    <label for="month"></label>
+    <select id="month" name="month" class="form-control ml-3" onchange="this.form.submit()">
+      <option selected>January</option>
+      <option>February</option>
+      <option>March</option>
+      <option>April</option>
+      <option>May</option>
+      <option>June</option>
+      <option>July</option>
+      <option>August</option>
+      <option>September</option>
+      <option>October</option>
+      <option>November</option>
+      <option>December</option>
+    </select>
   </form>
+
+
 </div>
 
 <div class="text-center mt-5 mb-3 d-flex justify-content-center">
