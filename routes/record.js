@@ -5,13 +5,15 @@ const { authenticated } = require('../config/auth.js')
 
 // 顯示所有購買項目
 router.get('/', authenticated, (req, res) => {
-  const queryCategory = req.query.category
+  const queriedCategory = req.query.category || 'all'
+  const time = new Date()
+  const queriedMonth = req.query.month || time.toISOString().slice(0, 7)
 
-  if (!queryCategory || queryCategory === 'all') {
+  if (queriedCategory === 'all') {
     let total = 0
     let subtotal = 0
 
-    Record.find({ userId: req.user._id })
+    Record.find({ userId: req.user._id, date: { $regex: queriedMonth } })
       .lean()
       .exec((err, records) => {
         if (err) console.error(err)
@@ -34,9 +36,10 @@ router.get('/', authenticated, (req, res) => {
             if (!total) {
               return '0'
             } else {
-              return Math.floor((subtotal * 100) / total)
+              return Math.round((subtotal * 100) / total)
             }
           },
+          queriedMonth,
           all: true
         })
       })
@@ -44,7 +47,7 @@ router.get('/', authenticated, (req, res) => {
     let total = 0
     let subtotal = 0
 
-    Record.find({ userId: req.user._id })
+    Record.find({ userId: req.user._id, date: { $regex: queriedMonth } })
       .lean()
       .exec((err, records) => {
         records.forEach(record => {
@@ -52,7 +55,7 @@ router.get('/', authenticated, (req, res) => {
         })
       })
 
-    Record.find({ userId: req.user._id, category: queryCategory })
+    Record.find({ userId: req.user._id, category: queriedCategory, date: { $regex: queriedMonth } })
       .lean()
       .exec((err, records) => {
         if (err) console.error(err)
@@ -69,8 +72,15 @@ router.get('/', authenticated, (req, res) => {
           records,
           total,
           subtotal,
-          percentage: Math.floor((subtotal * 100) / total),
-          [queryCategory]: true
+          percentage() {
+            if (!total) {
+              return '0'
+            } else {
+              return Math.round((subtotal * 100) / total)
+            }
+          },
+          queriedMonth,
+          [queriedCategory]: true
         })
       })
   }
