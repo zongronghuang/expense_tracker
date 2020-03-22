@@ -31,7 +31,7 @@ method-override
 mongoose 
 express-session 
 bcryptjs 
-connect-flash 
+connect-flash 
 passport 
 passport-local 
 passport-facebook
